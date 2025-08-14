@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자리 배치 표</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<body class="bg-gradient-to-br from-yellow-50 to-yellow-100 min-h-screen flex flex-col items-center justify-center">
+
+<div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-4xl">
+    <h1 class="text-3xl font-bold text-yellow-600 mb-6 text-center">
+        <i class="bi bi-table"></i> 1~30 지정 자리 배치
+    </h1>
+
+    <button id="makeSeats" 
+            class="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-3 rounded-lg font-bold text-lg shadow-md flex items-center justify-center gap-2 mb-6">
+        <i class="bi bi-check2-square"></i> 자리 배치 보기
+    </button>
+
+    <!-- 표 표시 영역 -->
+    <div id="seatContainer" class="overflow-x-auto"></div>
+</div>
+
+<script>
+document.getElementById("makeSeats").addEventListener("click", function () {
+    let students = Array.from({length: 30}, (_, i) => i + 1); // 1~30
+    let cols = 5; // 열 개수
+    let rows = Math.ceil(students.length / cols);
+
+    let tableHTML = `
+        <table class="table-auto border-collapse border border-gray-400 w-full text-center">
+            <tbody>
+    `;
+
+    for (let r = 0; r < rows; r++) {
+        tableHTML += `<tr>`;
+        for (let c = 0; c < cols; c++) {
+            let index = r * cols + c;
+            if (students[index] !== undefined) {
+                tableHTML += `<td class="border border-gray-400 p-4 bg-yellow-100 font-bold">${students[index]}</td>`;
+            } else {
+                tableHTML += `<td class="border border-gray-400 p-4 bg-gray-50"></td>`;
+            }
+        }
+        tableHTML += `</tr>`;
+    }
+
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    document.getElementById("seatContainer").innerHTML = tableHTML;
+});
+</script>
+
+</body>
+</html>
